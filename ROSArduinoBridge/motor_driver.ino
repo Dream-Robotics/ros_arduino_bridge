@@ -86,6 +86,23 @@
     setMotorSpeed(LEFT, leftSpeed);
     setMotorSpeed(RIGHT, rightSpeed);
   }
+  
+#elif defined ROBOCLAW_2x30A
+  #include <Servo.h>
+
+  Servo leftMotor;
+  Servo rightMotor;
+
+  void initMotorController() {
+    leftMotor.attach(LEFT_MOTOR);
+    rightMotor.attach(RIGHT_MOTOR);
+  }
+
+  void setMotorSpeeds(long leftSpeed, long rightSpeed) {
+    leftMotor.writeMicroseconds(leftSpeed);
+    rightMotor.writeMicroseconds(rightSpeed);
+  }
+
 #else
   #error A motor driver must be selected!
 #endif

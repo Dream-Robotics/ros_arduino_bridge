@@ -63,7 +63,10 @@
    #define ARDUINO_ENC_COUNTER
 
    /* L298 Motor driver*/
-   #define L298_MOTOR_DRIVER
+   //#define L298_MOTOR_DRIVER
+
+   /* Roboclaw 2x30A motor controller*/
+   #define ROBOCLAW_2x30A
 #endif
 
 //#define USE_SERVOS  // Enable use of PWM servos as defined in servos.h
@@ -355,4 +358,3 @@ void loop() {
   }
 #endif
 }
-
