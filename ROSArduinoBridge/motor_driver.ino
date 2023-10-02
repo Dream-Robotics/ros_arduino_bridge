@@ -90,17 +90,44 @@
 #elif defined ROBOCLAW_2x30A
   #include <Servo.h>
 
+  // the servo class can be used to control Roboclaw motors
   Servo leftMotor;
   Servo rightMotor;
 
   void initMotorController() {
+    /*
+      - setup motor control pins
+    */
     leftMotor.attach(LEFT_MOTOR);
     rightMotor.attach(RIGHT_MOTOR);
   }
 
-  void setMotorSpeeds(long leftSpeed, long rightSpeed) {
-    leftMotor.writeMicroseconds(leftSpeed);
-    rightMotor.writeMicroseconds(rightSpeed);
+  void setMotorSpeed(int motor, int speed) {
+    /*
+      - argument speed ranges from -255 to 255. speed < 0 is reverse
+      - Roboclaw speed values range from 1750 to 1250. speed < 1500 is reverse
+      - argument speed needs to be mapped to roboclaw speed
+      - speed is sent to the motor controller
+    */
+    int mapped_speed = map(speed, -255, 255, FULL_BACKWARD, FULL_FORWARD);
+    switch(motor) {
+      case LEFT:
+        leftMotor.writeMicroseconds(mapped_speed);
+        break;
+      case RIGHT:
+        rightMotor.writeMicroseconds(mapped_speed);
+        break;
+      default:
+        break;
+    }
+  }
+
+  void setMotorSpeeds(int leftSpeed, int rightSpeed) {
+    /*
+      - map and send speed values to each motor
+    */
+    setMotorSpeed(LEFT, leftSpeed);
+    setMotorSpeed(RIGHT, rightSpeed);
   }
 
 #else
